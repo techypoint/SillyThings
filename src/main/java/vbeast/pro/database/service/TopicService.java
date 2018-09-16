@@ -35,20 +35,22 @@ public class TopicService implements AsyncInterface {
         return topicList;
     }
 
-    public void save(Topic topic){
-        System.out.println(topicRepository.hashCode());
+    public int save(Topic topic){
+//        System.out.println(topicRepository.hashCode());
        Topic integer= topicRepository.save(topic);
-        System.out.println(integer.getId());
+        return integer.getId();
     }
 
     public void processAsync(){
-        async.doBackgroundTask(this);
+        Topic topic=new Topic("varun",Thread.currentThread().getName()+"--"+Thread.currentThread().getId());
+       int id= save(topic);
+        async.doBackgroundTask(this,id);
     }
 
     @Override
     public void finalExecution(Topic topic) {
-//        System.out.println("FINAL EXECUTION START--"+Thread.currentThread().getName()+"--"+Thread.currentThread().getId());
+        System.out.println("FINAL EXECUTION START--"+Thread.currentThread().getName()+"--"+Thread.currentThread().getId());
         save(topic);
-//        System.out.println("FINAL EXECUTION END--"+Thread.currentThread().getName()+"--"+Thread.currentThread().getId());
+        System.out.println("FINAL EXECUTION END--"+Thread.currentThread().getName()+"--"+Thread.currentThread().getId());
     }
 }

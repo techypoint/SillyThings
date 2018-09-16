@@ -16,6 +16,9 @@ public class Topic {
     @Column(name = "descrption")
     private String desc;
 
+    public Topic() {
+    }
+
     public Topic( String name, String desc) {
 //        this.id = id;
         this.name = name;
